@@ -1,1 +1,9 @@
 D:\Bak\codes\PicRelated\PicDown\bin\Debug\PicDown.exe.config
+D:\Bak\codes\PicRelated\PicDown\bin\Debug\PicDown.exe
+D:\Bak\codes\PicRelated\PicDown\bin\Debug\PicDown.pdb
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.csprojResolveAssemblyReference.cache
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.frmMain.resources
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.Properties.Resources.resources
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.csproj.GenerateResource.Cache
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.exe
+D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.pdb

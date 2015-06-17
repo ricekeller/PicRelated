@@ -23,5 +23,10 @@ namespace PicDown
 		{
 			InitializeComponent();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			WebUtils.DownloadFile(textBox1.Text, textBox2.Text);
+		}
 	}
 }
