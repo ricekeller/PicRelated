@@ -1,0 +1,5 @@
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\bin\Debug\ILLCEncoder.dll
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\bin\Debug\ILLCEncoder.pdb
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Debug\ILLCEncoder.csprojResolveAssemblyReference.cache
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Debug\ILLCEncoder.dll
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Debug\ILLCEncoder.pdb

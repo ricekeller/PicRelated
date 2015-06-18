@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ILLC.Encoder;
 
 namespace PicDown
 {
@@ -27,6 +29,24 @@ namespace PicDown
 		private void button1_Click(object sender, EventArgs e)
 		{
 			WebUtils.DownloadFile(textBox1.Text, textBox2.Text);
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			byte[] b = new ILLCCodec().Encode(textBox1.Text);
+			FileStream fs = new FileStream(@"D:\t1.ilc",FileMode.Create);
+			fs.Write(b,0,b.Length);
+			fs.Flush();
+			fs.Close();
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			byte[] b = new ILLCCodec().Decode(textBox1.Text);
+			FileStream fs = new FileStream(@"D:\t1.jpg", FileMode.Create);
+			fs.Write(b, 0, b.Length);
+			fs.Flush();
+			fs.Close();
 		}
 	}
 }

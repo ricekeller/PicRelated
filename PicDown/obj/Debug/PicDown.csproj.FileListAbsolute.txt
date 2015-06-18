@@ -7,3 +7,5 @@ D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.Properties.Resources.resources
 D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.csproj.GenerateResource.Cache
 D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.exe
 D:\Bak\codes\PicRelated\PicDown\obj\Debug\PicDown.pdb
+D:\Bak\codes\PicRelated\PicDown\bin\Debug\ILLCEncoder.dll
+D:\Bak\codes\PicRelated\PicDown\bin\Debug\ILLCEncoder.pdb
