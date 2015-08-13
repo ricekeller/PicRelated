@@ -48,5 +48,43 @@ namespace PicDown
 			fs.Flush();
 			fs.Close();
 		}
+
+		private void btnDownloadFromFile_Click(object sender, EventArgs e)
+		{
+			if(string.IsNullOrWhiteSpace(textBox1.Text))
+			{
+				return;
+			}
+			if(string.IsNullOrWhiteSpace(textBox2.Text))
+			{
+				return;
+			}
+			try
+			{
+				StreamReader sr = new StreamReader(textBox1.Text);
+				if(!Directory.Exists(textBox2.Text))
+				{
+					Directory.CreateDirectory(textBox2.Text);
+				}
+
+				string url = null;
+				string filename = null;
+				while(!sr.EndOfStream)
+				{
+					url = sr.ReadLine();
+					if(string.IsNullOrWhiteSpace(url))
+					{
+						continue;
+					}
+					filename = Path.GetFileName(url);
+					filename = Path.Combine(textBox2.Text, filename);
+					WebUtils.DownloadFile(url, filename);
+				}
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
 	}
 }
