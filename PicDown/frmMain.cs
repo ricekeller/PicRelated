@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ILLC.Encoder;
+using Gma.UserActivityMonitor;
 
 namespace PicDown
 {
@@ -20,11 +21,45 @@ namespace PicDown
 		public string Prefix { get; set; }
 		public string Suffix { get; set; }
 
+        private bool IsCtrlDown { get; set; }
+        private bool IsTDown { get; set; }
 		
 		public frmMain()
 		{
 			InitializeComponent();
+            HookManager.KeyDown += HookManager_KeyDown;
+            HookManager.KeyUp += HookManager_KeyUp;
 		}
+
+        void HookManager_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Modifiers==Keys.ControlKey)
+            {
+                IsCtrlDown = false;
+            }
+            else if(e.KeyCode==Keys.T)
+            {
+                IsTDown = false;
+            }
+        }
+
+        void HookManager_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.ControlKey)
+            {
+                IsCtrlDown = true;
+            }
+            else if (e.KeyCode == Keys.T)
+            {
+                IsTDown = true;
+            }
+
+            if(IsCtrlDown&&IsTDown)
+            {
+                var bro = new BrowserPicDown();
+                bro.GetUrl();
+            }
+        }
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -86,5 +121,10 @@ namespace PicDown
 				Console.WriteLine(ex.Message);
 			}
 		}
+
+        private void btnBrowserTest_Click(object sender, EventArgs e)
+        {
+            
+        }
 	}
 }
