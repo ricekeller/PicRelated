@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ILLC.Encoder;
-using Gma.UserActivityMonitor;
 
 namespace PicDown
 {
@@ -27,8 +26,6 @@ namespace PicDown
 		public frmMain()
 		{
 			InitializeComponent();
-            HookManager.KeyDown += HookManager_KeyDown;
-            HookManager.KeyUp += HookManager_KeyUp;
 		}
 
         void HookManager_KeyUp(object sender, KeyEventArgs e)

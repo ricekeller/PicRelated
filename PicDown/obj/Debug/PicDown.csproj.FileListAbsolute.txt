@@ -20,5 +20,3 @@ D:\Repo\Dev\PicRelated\PicDown\obj\Debug\PicDown.csprojResolveAssemblyReference.
 D:\Repo\Dev\PicRelated\PicDown\obj\Debug\PicDown.frmMain.resources
 D:\Repo\Dev\PicRelated\PicDown\obj\Debug\PicDown.Properties.Resources.resources
 D:\Repo\Dev\PicRelated\PicDown\obj\Debug\PicDown.csproj.GenerateResource.Cache
-D:\Repo\Dev\PicRelated\PicDown\bin\Debug\Gma.UserActivityMonitor.dll
-D:\Repo\Dev\PicRelated\PicDown\bin\Debug\Gma.UserActivityMonitor.pdb

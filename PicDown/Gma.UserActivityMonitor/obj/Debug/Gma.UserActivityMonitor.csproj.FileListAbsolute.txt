@@ -1,6 +1,0 @@
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\bin\Debug\Gma.xml
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.dll
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\bin\Debug\Gma.UserActivityMonitor.pdb
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.csprojResolveAssemblyReference.cache
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.dll
-D:\Repo\Dev\PicRelated\PicDown\Gma.UserActivityMonitor\obj\Debug\Gma.UserActivityMonitor.pdb
