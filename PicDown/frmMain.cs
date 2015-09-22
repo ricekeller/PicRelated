@@ -17,49 +17,15 @@ namespace PicDown
 {
 	public partial class frmMain : Form
 	{
-		public string RootURL { get; set; }
-		public int StartIdx { get; set; }
-		public int EndIdx { get; set; }
-		public string Prefix { get; set; }
-		public string Suffix { get; set; }
-
-        private bool IsCtrlDown { get; set; }
-        private bool IsTDown { get; set; }
+		private const int s_id = 100;
 		
 		public frmMain()
 		{
 			InitializeComponent();
+			GlobalHotKeyHelper.RegisterHotKey(Handle, s_id, GlobalHotKeyHelper.KeyModifiers.Shift, Keys.T);
+			////注销Id号为100的热键设定
+			//HotKey.UnregisterHotKey(Handle, 100);
 		}
-
-        void HookManager_KeyUp(object sender, KeyEventArgs e)
-        {
-            if(e.Modifiers==Keys.ControlKey)
-            {
-                IsCtrlDown = false;
-            }
-            else if(e.KeyCode==Keys.T)
-            {
-                IsTDown = false;
-            }
-        }
-
-        void HookManager_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Modifiers == Keys.ControlKey)
-            {
-                IsCtrlDown = true;
-            }
-            else if (e.KeyCode == Keys.T)
-            {
-                IsTDown = true;
-            }
-
-            if(IsCtrlDown&&IsTDown)
-            {
-                var bro = new BrowserPicDown();
-                bro.GetUrl();
-            }
-        }
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -121,12 +87,23 @@ namespace PicDown
 				Console.WriteLine(ex.Message);
 			}
 		}
+		protected override void WndProc(ref Message m)
+		{
+			const int WM_HOTKEY = 0x0312;
+			//按快捷键 
+			switch (m.Msg)
+			{
+				case WM_HOTKEY:
+					switch (m.WParam.ToInt32())
+					{
+						case s_id:
+							PicRelatedHelper.GetUrlFromCurrentActiveChromeTab();
+							break;
 
-        private void btnBrowserTest_Click(object sender, EventArgs e)
-        {
-            WebClient cli = new WebClient(BrowserVersion.CHROME);
-            HtmlPage page = (HtmlPage)cli.GetPage("http://www.google.com");
-            IList<INode> imgs= page.GetElementsByTagName("img");
-        }
+					}
+					break;
+			}
+			base.WndProc(ref m);
+		}
 	}
 }
