@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ILLC.Encoder;
+using NHtmlUnit;
+using NHtmlUnit.Html;
+using NHtmlUnit.W3C.Dom;
 
 namespace PicDown
 {
@@ -121,7 +124,9 @@ namespace PicDown
 
         private void btnBrowserTest_Click(object sender, EventArgs e)
         {
-            
+            WebClient cli = new WebClient(BrowserVersion.CHROME);
+            HtmlPage page = (HtmlPage)cli.GetPage("http://www.google.com");
+            IList<INode> imgs= page.GetElementsByTagName("img");
         }
 	}
 }
