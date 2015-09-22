@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Automation;
-using System.Windows.Forms;
-using NHtmlUnit;
-using NHtmlUnit.Html;
-using NHtmlUnit.W3C.Dom;
+using OpenQA.Selenium;
+using OpenQA.Selenium.PhantomJS;
 
 namespace PicDown
 {
@@ -46,11 +43,19 @@ namespace PicDown
 		{
 			Console.WriteLine(url);
 			Thread th = new Thread(() => {
-				WebClient client = new WebClient(BrowserVersion.CHROME);
-				client.Options.ThrowExceptionOnScriptError = false;
-				HtmlPage page = (HtmlPage)client.GetPage(url);
-				IList<INode> imgs = page.GetElementsByTagName("img");
+				PhantomJSDriverService svc = PhantomJSDriverService.CreateDefaultService();
+				svc.HideCommandPromptWindow = true;
+				PhantomJSDriver driver = new PhantomJSDriver(svc);
+				driver.Navigate().GoToUrl(url);
+				ReadOnlyCollection<IWebElement> imgs= driver.FindElements(By.TagName("img"));
 				Console.WriteLine(imgs.Count);
+
+				foreach (IWebElement ele in imgs)
+				{
+					Console.WriteLine(ele);
+				}
+
+				driver.Quit();
 			});
 			th.SetApartmentState(ApartmentState.STA);
 			th.Start();
