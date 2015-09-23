@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicDown", "PicDown.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILLCEncoder", "ILLCEncoder\ILLCEncoder.csproj", "{55406346-CCDE-4F36-B515-BD49710EDCFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrUploader", "..\FlickrUploader\FlickrUploader.csproj", "{795E9B4C-3E7E-4E4A-AE08-58C394581D9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{55406346-CCDE-4F36-B515-BD49710EDCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55406346-CCDE-4F36-B515-BD49710EDCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55406346-CCDE-4F36-B515-BD49710EDCFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795E9B4C-3E7E-4E4A-AE08-58C394581D9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795E9B4C-3E7E-4E4A-AE08-58C394581D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795E9B4C-3E7E-4E4A-AE08-58C394581D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795E9B4C-3E7E-4E4A-AE08-58C394581D9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,7 +44,7 @@ namespace PicDown
 			Console.WriteLine(url);
 			Thread th = new Thread(() => {
 				PhantomJSDriverService svc = PhantomJSDriverService.CreateDefaultService();
-				svc.HideCommandPromptWindow = true;
+				svc.HideCommandPromptWindow = true;//hide the PhantomJS cmd window
 				PhantomJSDriver driver = new PhantomJSDriver(svc);
 				driver.Navigate().GoToUrl(url);
 				ReadOnlyCollection<IWebElement> imgs= driver.FindElements(By.TagName("img"));
