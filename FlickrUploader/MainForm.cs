@@ -165,10 +165,20 @@ namespace FlickrUploader
 						a.Add(p);
 
 						//upload
-						Stream s = new FileStream(p.FileInfo.FullName, FileMode.Open);
-						string pid = flickr.UploadPicture(s, fi.Name, fi.Name, string.Empty,
-							string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
-							ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
+                        Stream s=null;
+                        string pid = null;
+                        try
+                        {
+                            s = new FileStream(p.FileInfo.FullName, FileMode.Open);
+                            pid = flickr.UploadPicture(s, fi.Name, fi.Name, string.Empty,
+                                string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
+                                ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
+                        }
+                        catch(Exception e)
+                        {
+                            LogError(string.Format("[{0}] Error:{1} \nFilename:{2} Album:{3}",DateTime.Now,e.Message,fi.Name,i.Name));
+                        }
+						
 
 						if(!string.IsNullOrWhiteSpace(pid))
 						{
@@ -185,10 +195,17 @@ namespace FlickrUploader
 					string tmpPId = null;
 					while (null != tmpFi)
 					{
-						tmpPId = flickr.UploadPicture(new FileStream(tmpFi.FileInfo.FullName, FileMode.Open),
-							tmpFi.FileInfo.Name, tmpFi.FileInfo.Name, string.Empty,
-							string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
-							ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
+                        try
+                        {
+                            tmpPId = flickr.UploadPicture(new FileStream(tmpFi.FileInfo.FullName, FileMode.Open),
+                            tmpFi.FileInfo.Name, tmpFi.FileInfo.Name, string.Empty,
+                            string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
+                            ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
+                        }
+						catch(Exception e)
+                        {
+                            LogError(string.Format("[{0}] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, tmpFi.FileInfo.Name, i.Name));
+                        }
 
 						if(!string.IsNullOrWhiteSpace(tmpPId))
 						{
@@ -218,6 +235,15 @@ namespace FlickrUploader
 				}
 			}
 		}
+
+        private void LogError(string p)
+        {
+            using(StreamWriter sw=File.AppendText("log.dat"))
+            {
+                sw.WriteLine(p);
+                sw.Flush();
+            }
+        }
 
 		private int GetTotalFilesCount(string root)
 		{

@@ -1,0 +1,10 @@
+D:\Repo\Dev\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe.config
+D:\Repo\Dev\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe
+D:\Repo\Dev\PicRelated\FlickrUploader\bin\Release\FlickrUploader.pdb
+D:\Repo\Dev\PicRelated\FlickrUploader\bin\Release\FlickrNet.dll
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csprojResolveAssemblyReference.cache
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.MainForm.resources
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.Properties.Resources.resources
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csproj.GenerateResource.Cache
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.exe
+D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.pdb
