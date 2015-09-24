@@ -13,3 +13,6 @@ D:\Repo\Dev\PicRelated\PicDown\obj\Release\PicDown.Properties.Resources.resource
 D:\Repo\Dev\PicRelated\PicDown\obj\Release\PicDown.csproj.GenerateResource.Cache
 D:\Repo\Dev\PicRelated\PicDown\obj\Release\PicDown.exe
 D:\Repo\Dev\PicRelated\PicDown\obj\Release\PicDown.pdb
+D:\Bak\codes\PicRelated\PicDown\bin\Release\PicDown.exe.config
+D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.exe
+D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.pdb

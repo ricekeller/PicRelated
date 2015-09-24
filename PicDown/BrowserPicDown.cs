@@ -1,93 +1,143 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using OpenQA.Selenium;
+using OpenQA.Selenium.PhantomJS;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace PicDown
 {
     public class BrowserPicDown
     {
-        public void GetUrl()
-        {
-            // there are always multiple chrome processes, so we have to loop through all of them to find the
-            // process with a Window Handle and an automation element of name "Address and search bar"
-            Process[] procsChrome = Process.GetProcessesByName("chrome");
-            foreach (Process chrome in procsChrome)
-            {
-                // the chrome process must have a window
-                if (chrome.MainWindowHandle == IntPtr.Zero)
-                {
-                    continue;
-                }
+        private static BlockingCollection<string> _urlQueue = new BlockingCollection<string>();
+		private const int MAXWAITSECOND = 60;
 
-                // find the automation element
-                AutomationElement elm = AutomationElement.FromHandle(chrome.MainWindowHandle);
+		static BrowserPicDown()
+		{
+			Task.Run(() => { 
+				while(true)
+				{
+					string url=null;
+					try
+					{
+						url = _urlQueue.Take();
+					}
+					catch (InvalidOperationException ioe) 
+					{
+						Console.WriteLine(ioe.Message);
+					}
+					
+					if(!string.IsNullOrWhiteSpace(url))
+					{
+						NavigateUrl(url);
+					}
+				}
+			});
+		}
 
-                // manually walk through the tree, searching using TreeScope.Descendants is too slow (even if it's more reliable)
-                AutomationElement elmUrlBar = null;
-                try
-                {
-                    // walking path found using inspect.exe (Windows SDK) for Chrome 31.0.1650.63 m (currently the latest stable)
-                    var elm1 = elm.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "Google Chrome"));
-                    if (elm1 == null) { continue; } // not the right chrome.exe
-                    // here, you can optionally check if Incognito is enabled:
-                    //bool bIncognito = TreeWalker.RawViewWalker.GetFirstChild(TreeWalker.RawViewWalker.GetFirstChild(elm1)) != null;
-                    var elm2 = TreeWalker.RawViewWalker.GetLastChild(elm1); // I don't know a Condition for this for finding :(
-                    var elm3 = elm2.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, ""));
-                    var elm4 = elm3.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ToolBar));
-                    elmUrlBar = elm4.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
-                }
-                catch
-                {
-                    // Chrome has probably changed something, and above walking needs to be modified. :(
-                    // put an assertion here or something to make sure you don't miss it
-                    continue;
-                }
+		private static void NavigateUrl(string url)
+		{
+			Console.WriteLine(url);
+			Thread th = new Thread(() => {
+				PhantomJSDriverService svc = PhantomJSDriverService.CreateDefaultService();
+				svc.HideCommandPromptWindow = true;//hide the PhantomJS cmd window
+				PhantomJSDriver driver = new PhantomJSDriver(svc);
+				driver.Navigate().GoToUrl(url);
+				
+				//wait until target exists, then find them
+				WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+				//wait.Until(ExpectedConditions.ElementExists(By.Id("")));
+				
+				ReadOnlyCollection<IWebElement> imgs= driver.FindElements(By.TagName("img"));
+				Console.WriteLine(imgs.Count);
 
-                // make sure it's valid
-                if (elmUrlBar == null)
-                {
-                    // it's not..
-                    continue;
-                }
+				foreach (IWebElement ele in imgs)
+				{
+					Console.WriteLine(ele);
+				}
 
-                // elmUrlBar is now the URL bar element. we have to make sure that it's out of keyboard focus if we want to get a valid URL
-                if ((bool)elmUrlBar.GetCurrentPropertyValue(AutomationElement.HasKeyboardFocusProperty))
-                {
-                    continue;
-                }
+				driver.Quit();
+			});
+			th.SetApartmentState(ApartmentState.STA);
+			th.Start();
+		}
 
-                // there might not be a valid pattern to use, so we have to make sure we have one
-                AutomationPattern[] patterns = elmUrlBar.GetSupportedPatterns();
-                if (patterns.Length == 1)
-                {
-                    string ret = "";
-                    try
-                    {
-                        ret = ((ValuePattern)elmUrlBar.GetCurrentPattern(patterns[0])).Current.Value;
-                    }
-                    catch { }
-                    if (ret != "")
-                    {
-                        // must match a domain name (and possibly "https://" in front)
-                        if (Regex.IsMatch(ret, @"^(https:\/\/)?[a-zA-Z0-9\-\.]+(\.[a-zA-Z]{2,4}).*$"))
-                        {
-                            // prepend http:// to the url, because Chrome hides it if it's not SSL
-                            if (!ret.StartsWith("http"))
-                            {
-                                ret = "http://" + ret;
-                            }
-                            Console.WriteLine("Open Chrome URL found: '" + ret + "'");
-                        }
-                    }
-                    continue;
-                }
-            }
-        }
+		public static void GetUrlFromCurrentActiveChromeTab()
+		{
+			Task.Run(() =>
+			{
+				string url = GetUrlFromCurrentActiveChromeTabHelper();
+				
+				if(!string.IsNullOrWhiteSpace(url))
+				{
+					_urlQueue.Add(url);
+				}
+			});
+		}
+
+		private static string GetUrlFromCurrentActiveChromeTabHelper()
+		{
+			// there are always multiple chrome processes, so we have to loop through all of them to find the
+			// process with a Window Handle and an automation element of name "Address and search bar"
+			Process[] procsChrome = Process.GetProcessesByName("chrome");
+			string url = string.Empty;
+			foreach (Process chrome in procsChrome)
+			{
+				// the chrome process must have a window
+				if (chrome.MainWindowHandle == IntPtr.Zero)
+				{
+					continue;
+				}
+
+				// find the automation element
+				AutomationElement elm = AutomationElement.FromHandle(chrome.MainWindowHandle);
+
+				// manually walk through the tree, searching using TreeScope.Descendants is too slow (even if it's more reliable)
+				AutomationElement elmUrlBar = null;
+				try
+				{
+					var propFindText = new PropertyCondition(AutomationElement.NameProperty, "Address and search bar");
+					elmUrlBar = elm.FindFirst(TreeScope.Descendants, propFindText);
+				}
+				catch
+				{
+					// Chrome has probably changed something, and above walking needs to be modified. :(
+					// put an assertion here or something to make sure you don't miss it
+					continue;
+				}
+
+				// make sure it's valid
+				if (elmUrlBar == null)
+				{
+					continue;
+				}
+
+				// elmUrlBar is now the URL bar element. we have to make sure that it's out of keyboard focus if we want to get a valid URL
+				if ((bool)elmUrlBar.GetCurrentPropertyValue(AutomationElement.HasKeyboardFocusProperty))
+				{
+					continue;
+				}
+
+				url = elmUrlBar.GetCurrentPropertyValue(ValuePattern.ValueProperty).ToString();
+				if (!string.IsNullOrEmpty(url) && Regex.IsMatch(url, @"^(https?:\/\/)?[a-zA-Z0-9\-\.]+(\.[a-zA-Z]{2,4}).*$"))
+				{
+					// prepend http:// to the url, because Chrome hides it if it's not SSL
+					if (!url.StartsWith("http"))
+					{
+						url = "http://" + url;
+					}
+					Console.WriteLine("Open Chrome URL found: '" + url + "'");
+					return url;
+				}
+				continue;
+			}
+			return null;
+		}
     }
 }

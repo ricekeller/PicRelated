@@ -87,9 +87,8 @@ namespace PicDown
 					switch (m.WParam.ToInt32())
 					{
 						case s_id:
-							PicRelatedHelper.GetUrlFromCurrentActiveChromeTab();
+						    BrowserPicDown.GetUrlFromCurrentActiveChromeTab();
 							break;
-
 					}
 					break;
 			}

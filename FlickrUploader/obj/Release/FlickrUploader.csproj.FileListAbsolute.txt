@@ -7,3 +7,6 @@ D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.Properties.Reso
 D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csproj.GenerateResource.Cache
 D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.exe
 D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.pdb
+D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe.config
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.exe
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.pdb
