@@ -46,5 +46,17 @@ namespace FlickrUploader
 		{
 			return !this.FirstPhotoId.Equals(photoId);
 		}
+
+        public Photo NotAddedToAlbum()
+        {
+            foreach(Photo p in this)
+            {
+                if(!p.IsAddedToAlbum)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
 	}
 }

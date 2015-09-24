@@ -11,5 +11,6 @@ namespace FlickrUploader
 	{
 		public FileInfo FileInfo { get; set; }
 		public string PhotoId { get; set; }
+        public bool IsAddedToAlbum { get; set; }
 	}
 }
