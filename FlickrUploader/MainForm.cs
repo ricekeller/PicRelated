@@ -204,6 +204,7 @@ namespace FlickrUploader
                         }
 						catch(Exception e)
                         {
+                            Thread.Sleep(1000);
                             LogError(string.Format("[{0}] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, tmpFi.FileInfo.Name, i.Name));
                         }
 
