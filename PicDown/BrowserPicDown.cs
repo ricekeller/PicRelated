@@ -15,7 +15,8 @@ namespace PicDown
 {
     public class BrowserPicDown
     {
-        private static BlockingCollection<string> _urlQueue = new BlockingCollection<string>();
+		//stores URLs
+        private static BlockingCollection<string> s_urlQueue = new BlockingCollection<string>();
 		private const int MAXWAITSECOND = 60;
 
 		static BrowserPicDown()
@@ -26,7 +27,7 @@ namespace PicDown
 					string url=null;
 					try
 					{
-						url = _urlQueue.Take();
+						url = s_urlQueue.Take();
 					}
 					catch (InvalidOperationException ioe) 
 					{
@@ -76,7 +77,7 @@ namespace PicDown
 				
 				if(!string.IsNullOrWhiteSpace(url))
 				{
-					_urlQueue.Add(url);
+					s_urlQueue.Add(url);
 				}
 			});
 		}

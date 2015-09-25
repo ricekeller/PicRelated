@@ -13,8 +13,6 @@ namespace PicDown
 		{
 			InitializeComponent();
 			GlobalHotKeyHelper.RegisterHotKey(Handle, s_id, GlobalHotKeyHelper.KeyModifiers.Shift, Keys.T);
-			////注销Id号为100的热键设定
-			//HotKey.UnregisterHotKey(Handle, 100);
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -93,6 +91,13 @@ namespace PicDown
 					break;
 			}
 			base.WndProc(ref m);
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			//unregister global key hook
+			GlobalHotKeyHelper.UnregisterHotKey(Handle, s_id);
+			base.OnClosed(e);
 		}
 	}
 }
