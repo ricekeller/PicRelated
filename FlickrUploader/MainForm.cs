@@ -17,17 +17,11 @@ namespace FlickrUploader
 	public partial class MainForm : Form
 	{
 		private OAuthRequestToken _requestToken;
-		private BackgroundWorker _worker;
 		private string _path;
 		public MainForm()
 		{
 			InitializeComponent();
 			InitFlickr();
-			_worker = new BackgroundWorker();
-			_worker.DoWork += _worker_DoWork;
-			_worker.ProgressChanged += _worker_ProgressChanged;
-			_worker.RunWorkerCompleted += _worker_RunWorkerCompleted;
-			_worker.WorkerReportsProgress = true;
 		}
 
 		void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -113,11 +107,20 @@ namespace FlickrUploader
 			}
 		}
 
-		private void btnProcess_Click(object sender, EventArgs e)
+		private async void btnProcess_Click(object sender, EventArgs e)
 		{
 			InitProgressBar();
 			DisableOrEnableAllControls(false);
-			_worker.RunWorkerAsync();
+
+			if (proBar.Maximum == 0)
+			{
+				return;
+			}
+			await Task.Run(() => { DoJob(); });
+
+			//task completed
+			DisableOrEnableAllControls(true);
+			lblStatus.Text = "Task Completed! " + proBar.Maximum + " files uploaded!";
 		}
 
 		private void InitProgressBar()
@@ -137,13 +140,10 @@ namespace FlickrUploader
 			Flickr flickr = FlickrManager.GetAuthInstance();
 			//key: folder name, value: album
 			Dictionary<string, Album> map = new Dictionary<string, Album>();
-
 			DirectoryInfo d = new DirectoryInfo(_path);
 			DirectoryInfo[] subs = d.GetDirectories();
-			int totalFiles = proBar.Maximum;
-			if (totalFiles == 0) return;
-			int currentFile = 0;
-			//go through all dirs in the root path
+
+			//build data
 			foreach (DirectoryInfo i in subs)
 			{
 				if (!map.ContainsKey(i.Name))
@@ -163,105 +163,93 @@ namespace FlickrUploader
 						p.FileInfo = fi;
 
 						a.Add(p);
+					}
+				}
+			}
 
-						//upload
-						Stream s = null;
-						string pid = null;
+			//upload and add to set
+			foreach (KeyValuePair<string, Album> kv in map)
+			{
+				//1. upload
+				foreach (Photo p in kv.Value)
+				{
+					lblStatus.Invoke(new Action(() => { lblStatus.Text = proBar.Value + ":" + p.FileInfo.Name; }));
+					Stream s = null;
+					string pid = null;
+					while (string.IsNullOrWhiteSpace(pid))
+					{
 						try
 						{
 							s = new FileStream(p.FileInfo.FullName, FileMode.Open);
-							pid = flickr.UploadPicture(s, fi.Name, fi.Name, string.Empty,
+							pid = flickr.UploadPicture(s, p.FileInfo.Name, p.FileInfo.Name, string.Empty,
 								string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
 								ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
 						}
 						catch (Exception e)
 						{
-							LogError(string.Format("[{0}] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, fi.Name, i.Name));
-							Thread.Sleep(1000);
-						}
-
-
-						if (!string.IsNullOrWhiteSpace(pid))
-						{
-							p.PhotoId = pid;
-
-							//report progress
-							currentFile++;
-							_worker.ReportProgress(currentFile);
-						}
-					}
-
-					//ensure all uploaded
-					Photo tmpFi = a.UploadFailedPhotoInfo();
-					string tmpPId = null;
-					while (null != tmpFi)
-					{
-						try
-						{
-							tmpPId = flickr.UploadPicture(new FileStream(tmpFi.FileInfo.FullName, FileMode.Open),
-							tmpFi.FileInfo.Name, tmpFi.FileInfo.Name, string.Empty,
-							string.IsNullOrWhiteSpace(txtTag.Text) ? string.Empty : txtTag.Text, false, false, false,
-							ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
-						}
-						catch (Exception e)
-						{
-							Thread.Sleep(1000);
-							LogError(string.Format("[{0}] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, tmpFi.FileInfo.Name, i.Name));
-						}
-
-						if (!string.IsNullOrWhiteSpace(tmpPId))
-						{
-							tmpFi.PhotoId = tmpPId;
-
-							//report progress
-							currentFile++;
-							_worker.ReportProgress(currentFile);
-						}
-
-						tmpFi = a.UploadFailedPhotoInfo();
-					}
-
-					//create album
-					Photoset ps = null;
-					while (null == ps)
-					{
-						try
-						{
-							ps = flickr.PhotosetsCreate(i.Name, a.FindFirstPhotoId());
-						}
-						catch (Exception e)
-						{
-							LogError(string.Format("[{0}-create album] Error:{1} \nAlbum:{2}\n", DateTime.Now, e.Message, i.Name));
+							LogError(string.Format("[{0} Upload Error] Message:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, p.FileInfo.Name, kv.Key));
 							Thread.Sleep(1000);
 						}
 					}
-					a.SetId = ps.PhotosetId;
-
-					//add photos
-					Photo tmpP = a.NotAddedToAlbum();
-					while (null != tmpP)
-					{
-						try
-						{
-							if (a.IsNotTheFirstPhoto(tmpP.PhotoId))
-							{
-								flickr.PhotosetsAddPhoto(a.SetId, tmpP.PhotoId);
-								tmpP.IsAddedToAlbum = true;
-							}
-							else
-							{
-								tmpP.IsAddedToAlbum = true;
-							}
-						}
-						catch (Exception e)
-						{
-							LogError(string.Format("[{0}-add to album] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, tmpFi.FileInfo.Name, i.Name));
-							Thread.Sleep(1000);
-						}
-						tmpP = a.NotAddedToAlbum();
-					}
-					Console.WriteLine("Folder:{0} uploaded successfully!", i.Name);
+					p.PhotoId = pid;
+					proBar.Invoke(new Action(() => { proBar.Value++; }));
 				}
+
+				//2. create album
+				Photoset ps = null;
+				while (null == ps)
+				{
+					try
+					{
+						ps = flickr.PhotosetsCreate(kv.Key, kv.Value.FindFirstPhotoId());
+					}
+					catch (Exception e)
+					{
+						LogError(string.Format("[{0} Create Album] Error:{1} \nAlbum:{2}\n", DateTime.Now, e.Message, kv.Key));
+						Thread.Sleep(1000);
+					}
+				}
+				kv.Value.SetId = ps.PhotosetId;
+
+				//3. add photos
+				foreach (Photo p in kv.Value)
+				{
+					while (!p.IsAddedToAlbum)
+					{
+						try
+						{
+							flickr.PhotosetsAddPhoto(kv.Value.SetId, p.PhotoId);
+						}
+						catch (Exception e)
+						{
+							LogError(string.Format("[{0} Add to Album] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, p.FileInfo.Name, kv.Key));
+							Thread.Sleep(1000);
+						}
+
+						AllContexts ctx = null;
+						while (null == ctx)
+						{
+							try
+							{
+								ctx = flickr.PhotosGetAllContexts(p.PhotoId);
+							}
+							catch (Exception e)
+							{
+								LogError(string.Format("[{0} GetAllContext] Error:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, p.FileInfo.Name, kv.Key));
+								Thread.Sleep(1000);
+							}
+						}
+
+						foreach (ContextSet cs in ctx.Sets)
+						{
+							if (cs.PhotosetId.Equals(kv.Value.SetId))
+							{
+								p.IsAddedToAlbum = true;
+							}
+						}
+					}
+				}
+				Console.WriteLine("Folder:{0} uploaded successfully!", kv.Key);
 			}
 		}
 

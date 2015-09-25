@@ -10,3 +10,9 @@ D:\Repo\Dev\PicRelated\FlickrUploader\obj\Release\FlickrUploader.pdb
 D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe.config
 D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.exe
 D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.pdb
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.MainForm.resources
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.Properties.Resources.resources
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csproj.GenerateResource.Cache
+D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe
+D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.pdb
+D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrNet.dll
