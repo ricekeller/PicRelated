@@ -6,3 +6,4 @@ D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\bin\Release\ILLCEncoder.dll
 D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\bin\Release\ILLCEncoder.pdb
 D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Release\ILLCEncoder.dll
 D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Release\ILLCEncoder.pdb
+D:\Bak\codes\PicRelated\PicDown\ILLCEncoder\obj\Release\ILLCEncoder.csprojResolveAssemblyReference.cache

@@ -1,0 +1,5 @@
+D:\Bak\codes\PicRelated\PNG\bin\Release\PNG.dll
+D:\Bak\codes\PicRelated\PNG\bin\Release\PNG.pdb
+D:\Bak\codes\PicRelated\PNG\obj\Release\PNG.dll
+D:\Bak\codes\PicRelated\PNG\obj\Release\PNG.pdb
+D:\Bak\codes\PicRelated\PNG\obj\Release\PNG.csprojResolveAssemblyReference.cache

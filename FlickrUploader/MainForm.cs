@@ -24,23 +24,6 @@ namespace FlickrUploader
 			InitFlickr();
 		}
 
-		void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			Console.WriteLine("Completed!");
-			CleanAfterComplete();
-		}
-
-		void _worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-		{
-			proBar.Value = e.ProgressPercentage;
-			lblStatus.Text = string.Format("Files uploaded:{0}", e.ProgressPercentage);
-		}
-
-		void _worker_DoWork(object sender, DoWorkEventArgs e)
-		{
-			DoJob();
-		}
-
 		private void InitFlickr()
 		{
 			if (null == FlickrManager.OAuthToken)
@@ -189,6 +172,10 @@ namespace FlickrUploader
 						{
 							LogError(string.Format("[{0} Upload Error] Message:{1} \nFilename:{2} Album:{3}", DateTime.Now, e.Message, p.FileInfo.Name, kv.Key));
 							Thread.Sleep(1000);
+						}
+						finally
+						{
+							s.Close();
 						}
 					}
 					p.PhotoId = pid;

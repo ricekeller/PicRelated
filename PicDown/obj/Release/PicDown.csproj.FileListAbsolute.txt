@@ -30,3 +30,5 @@ D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.csprojResolveAssemblyReferen
 D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.frmMain.resources
 D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.Properties.Resources.resources
 D:\Bak\codes\PicRelated\PicDown\obj\Release\PicDown.csproj.GenerateResource.Cache
+D:\Bak\codes\PicRelated\PicDown\bin\Release\PNG.dll
+D:\Bak\codes\PicRelated\PicDown\bin\Release\PNG.pdb

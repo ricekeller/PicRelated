@@ -16,3 +16,4 @@ D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csproj.Generat
 D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.exe
 D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrUploader.pdb
 D:\Bak\codes\PicRelated\FlickrUploader\bin\Release\FlickrNet.dll
+D:\Bak\codes\PicRelated\FlickrUploader\obj\Release\FlickrUploader.csprojResolveAssemblyReference.cache

@@ -90,6 +90,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PNG\PNG.csproj">
+      <Project>{df8172cd-5ff8-4f7d-9fe0-50c2bf3bfd5b}</Project>
+      <Name>PNG</Name>
+    </ProjectReference>
     <ProjectReference Include="ILLCEncoder\ILLCEncoder.csproj">
       <Project>{55406346-ccde-4f36-b515-bd49710edcfe}</Project>
       <Name>ILLCEncoder</Name>
