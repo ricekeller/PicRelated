@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PNG
 {
-    public class PNGDecoder
-    {
+	public class PNGDecoder
+	{
 		private static byte[] s_beginning = new byte[8] { 137, 80, 78, 71, 13, 10, 26, 10 };
+		private static byte[] s_chunkType_IHDR = new byte[4] { 73, 72, 68, 82 };
 		private Stream _stream;
 		public PNGDecoder(Stream fileStream)
 		{
@@ -17,10 +18,10 @@ namespace PNG
 		}
 		public bool IsPNG()
 		{
-			_stream.Seek(0,SeekOrigin.Begin);
-			for(int i=0;i<8;i++)
+			_stream.Seek(0, SeekOrigin.Begin);
+			for (int i = 0; i < 8; i++)
 			{
-				if(_stream.ReadByte()!=s_beginning[i])
+				if (_stream.ReadByte() != s_beginning[i])
 				{
 					return false;
 				}
@@ -47,5 +48,32 @@ namespace PNG
 			//		the chunk type field and chunk data fields, but not including the length field. The CRC can be used
 			//		to check for corruption of the data. The CRC is always present, even for chunks containing no data.
 		}
-    }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void ReadIHDRChunk()
+		{
+			int chunkLen = BitConverter.ToInt32(Read4Byte(), 0);
+			//make sure the chunk type is IHDR
+			for(int i=0;i<4;i++)
+			{
+				if(s_chunkType_IHDR[i]!=_stream.ReadByte())
+				{
+					throw new Exception("Data corrupted in IHDR chunk!");
+				}
+			}
+
+		}
+
+		private byte[] Read4Byte()
+		{
+			byte[] res = new byte[4];
+			for (int i = 0; i < 4; i++)
+			{
+				res[i] = Convert.ToByte(_stream.ReadByte());
+			}
+			return res;
+		}
+	}
 }
