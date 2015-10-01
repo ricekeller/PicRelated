@@ -1,0 +1,15 @@
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\phantomjs.exe
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\phantomjs-license.txt
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\MyIPAddress.exe.config
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\MyIPAddress.exe
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\MyIPAddress.pdb
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\WebDriver.dll
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\WebDriver.Support.dll
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\WebDriver.xml
+D:\Bak\codes\PicRelated\MyIPAddress\bin\Release\WebDriver.Support.xml
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.csprojResolveAssemblyReference.cache
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.MainForm.resources
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.Properties.Resources.resources
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.csproj.GenerateResource.Cache
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.exe
+D:\Bak\codes\PicRelated\MyIPAddress\obj\Release\MyIPAddress.pdb
