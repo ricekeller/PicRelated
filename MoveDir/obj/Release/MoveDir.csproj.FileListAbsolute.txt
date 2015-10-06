@@ -1,0 +1,9 @@
+D:\Bak\codes\PicRelated\MoveDir\bin\Release\MoveDir.exe.config
+D:\Bak\codes\PicRelated\MoveDir\bin\Release\MoveDir.exe
+D:\Bak\codes\PicRelated\MoveDir\bin\Release\MoveDir.pdb
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.csprojResolveAssemblyReference.cache
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.Form1.resources
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.Properties.Resources.resources
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.csproj.GenerateResource.Cache
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.exe
+D:\Bak\codes\PicRelated\MoveDir\obj\Release\MoveDir.pdb

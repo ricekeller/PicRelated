@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PNG", "..\PNG\PNG.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIPAddress", "..\MyIPAddress\MyIPAddress.csproj", "{9BA2E810-2243-4F06-B35F-F3AC79AFDA27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveDir", "..\MoveDir\MoveDir.csproj", "{A8408891-B579-4609-9882-C99FB3950811}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9BA2E810-2243-4F06-B35F-F3AC79AFDA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BA2E810-2243-4F06-B35F-F3AC79AFDA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA2E810-2243-4F06-B35F-F3AC79AFDA27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8408891-B579-4609-9882-C99FB3950811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8408891-B579-4609-9882-C99FB3950811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8408891-B579-4609-9882-C99FB3950811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8408891-B579-4609-9882-C99FB3950811}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
